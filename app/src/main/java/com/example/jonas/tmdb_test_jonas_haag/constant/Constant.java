@@ -2,7 +2,10 @@ package com.example.jonas.tmdb_test_jonas_haag.constant;
 
 public class Constant {
     public static String BASE_URL = "https://api.themoviedb.org";
-    public static String API_KEY = "TABORTbc41a44f3cc012cdc48cdba42f591b6c";
+    public static String API_KEY = "bc41a44f3cc012cdc48cdba42f591b6c";
     public static String LANGUAGE = "en-US";
-    public static int PAGE = 1;
+    public static String EMPTY_PLACEHOLDER = "";
+    public static String DEFAULT_SEARCH_WORD = "Spiderman";
+    public static String AVERAGE_VOTE_OF_10 = "/10";
+    public static String MOVIE_ID = "MOVIE_ID";
 }

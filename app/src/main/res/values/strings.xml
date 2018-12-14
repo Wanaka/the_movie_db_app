@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">tmdb_test_jonas_haag</string>
+    <string name="hint_search_movie">Search for a movie</string>
+    <string name="toast_search_without_text">You need to write something!</string>
 </resources>
