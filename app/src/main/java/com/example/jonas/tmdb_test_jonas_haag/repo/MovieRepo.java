@@ -3,8 +3,12 @@ package com.example.jonas.tmdb_test_jonas_haag.repo;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.jonas.tmdb_test_jonas_haag.DAO.AppDatabase;
+import com.example.jonas.tmdb_test_jonas_haag.DAO.FavouriteMovie;
+import com.example.jonas.tmdb_test_jonas_haag.DAO.FavouritesDao;
 import com.example.jonas.tmdb_test_jonas_haag.api.ApiInterface;
 import com.example.jonas.tmdb_test_jonas_haag.constant.Constant;
 import com.example.jonas.tmdb_test_jonas_haag.model.MovieDetails;
@@ -22,11 +26,58 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieRepo {
 
+    private FavouritesDao userDao;
     MutableLiveData<List<Result>> getMovieList = new MutableLiveData<>();
     MutableLiveData<MovieDetails> getDetails = new MutableLiveData<>();
 
-
     public MovieRepo(Application application) {
+        AppDatabase db = AppDatabase.getAppDatabase(application);
+        userDao = db.favouriteMovieDao();
+    }
+
+    public void insert (FavouriteMovie movie) {
+        new insertAsyncTask(userDao).execute(movie);
+    }
+
+    public void deleteMovie(FavouriteMovie movie)  {
+        new deleteMovieAsyncTask(userDao).execute(movie);
+    }
+
+    public LiveData<List<FavouriteMovie>> getAllFavourites() {
+        return userDao.getAllFavourites();
+    }
+
+
+    //Add a movie
+    private static class insertAsyncTask extends AsyncTask<FavouriteMovie, Void, Void> {
+
+        private FavouritesDao mAsyncTaskDao;
+
+        insertAsyncTask(FavouritesDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final FavouriteMovie... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+
+    //Delete a movie
+    private static class deleteMovieAsyncTask extends AsyncTask<FavouriteMovie, Void, Void> {
+        private FavouritesDao mAsyncTaskDao;
+
+        deleteMovieAsyncTask(FavouritesDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final FavouriteMovie... params) {
+            mAsyncTaskDao.deleteWord(params[0]);
+            return null;
+        }
     }
 
     /* Get movie list */
@@ -46,10 +97,8 @@ public class MovieRepo {
                 MovieList responseBody = response.body();
                 List<Result> moviesResult = responseBody.getResults();
                 List<Result> movieList = new ArrayList<>();
-                //Result movie = resultList.get(0);
 
                 for(Result movie:  moviesResult){
-                    Log.d("TAG", "onResponse:  HEY" + movie.getTitle());
                     movieList.add(movie);
                 }
                 getMovieList.setValue(movieList);
@@ -65,8 +114,6 @@ public class MovieRepo {
 
     /* Get details of movie */
     public LiveData<MovieDetails> getMovieDetails(String sendText) {
-        Log.d("TAG", "onResponse:  REPO SENDTEXT value: " + sendText);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -80,8 +127,6 @@ public class MovieRepo {
             @Override
             public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
                 MovieDetails moviesResult = response.body();
-                Log.d("TAG", "onResponse:  REPO details" + moviesResult.getTitle());
-
                 getDetails.setValue(moviesResult);
             }
             @Override

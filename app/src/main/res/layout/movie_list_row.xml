@@ -7,7 +7,9 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="@color/colorBlack_tmdb"
+    android:theme="@style/TextStyle">
 
     <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -24,7 +26,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/card_title"
@@ -34,9 +37,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:lineSpacingExtra="8dp"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#DE000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/card_vote"
             app:layout_constraintStart_toStartOf="parent" />
@@ -46,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Rating"
+            android:text="@string/rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/card_title" />
 

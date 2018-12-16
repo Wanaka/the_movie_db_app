@@ -12,11 +12,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.jonas.tmdb_test_jonas_haag.R;
@@ -25,17 +23,16 @@ import com.example.jonas.tmdb_test_jonas_haag.constant.Constant;
 import com.example.jonas.tmdb_test_jonas_haag.model.Result;
 import com.example.jonas.tmdb_test_jonas_haag.viewmodel.MovieViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class SearchActivity extends AppCompatActivity implements MoviesAdapter.ItemClickListener, View.OnClickListener{
 
     private Toolbar toolbar;
-    private FloatingActionButton searchButton;
+    private FloatingActionButton searchButton, favouriteButton;
     private EditText inputText;
     private MovieViewModel movieViewModel;
-    MoviesAdapter adapter;
+    private MoviesAdapter adapter;
 
 
     @Override
@@ -47,17 +44,18 @@ public class SearchActivity extends AppCompatActivity implements MoviesAdapter.I
         setSupportActionBar(toolbar);
         searchButton = findViewById(R.id.fab_search);
         searchButton.setOnClickListener(this);
+        favouriteButton = findViewById(R.id.search_button_favourite);
+        favouriteButton.setOnClickListener(this);
         inputText = findViewById(R.id.edittext_search);
 
         movieViewModel =  ViewModelProviders.of(this).get(MovieViewModel.class);
 
-        // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerview_movie_list);
+        RecyclerView recyclerView = findViewById(R.id.search_recyclerview_movie_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MoviesAdapter(getApplicationContext());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-        defaultSearch();
+        defaultSearch(); //start app with filled list of movies
     }
 
     void defaultSearch(){
@@ -72,6 +70,7 @@ public class SearchActivity extends AppCompatActivity implements MoviesAdapter.I
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.fab_search) {
+            //Search movies
             if(!inputText.getText().toString().isEmpty()) {
                 hideKeyboard(view);
                 movieViewModel.getMovieList(inputText.getText().toString()).observe(this, new Observer<List<Result>>() {
@@ -84,6 +83,10 @@ public class SearchActivity extends AppCompatActivity implements MoviesAdapter.I
             else{
                 Toast.makeText(this, R.string.toast_search_without_text, Toast.LENGTH_SHORT).show();
             }
+        }
+        if(view.getId() == R.id.search_button_favourite) {
+            Intent intent = new Intent(view.getContext(), FavouritesActivity.class);
+            startActivity(intent);
         }
     }
 

@@ -4,23 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SearchActivity">
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/search_button_favourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
-        app:backgroundTint="@color/colorYellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/favourite_star" />
+    tools:context=".activity.FavouritesActivity">
 
     <include
-        android:id="@+id/search_toolbar"
-        layout="@layout/toolbar_search"
+        android:id="@+id/favourite_toolbar"
+        layout="@layout/toolbar_movie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,13 +16,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_recyclerview_movie_list"
+        android:id="@+id/favourite_recyclerview_favourites"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_toolbar">
-
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/favourite_toolbar" />
 </android.support.constraint.ConstraintLayout>

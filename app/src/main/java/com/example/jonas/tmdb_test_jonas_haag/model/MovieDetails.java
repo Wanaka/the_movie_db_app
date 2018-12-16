@@ -13,9 +13,6 @@ public class MovieDetails {
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
-    @SerializedName("belongs_to_collection")
-    @Expose
-    private BelongsToCollection belongsToCollection;
     @SerializedName("budget")
     @Expose
     private Integer budget;
@@ -46,14 +43,6 @@ public class MovieDetails {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-    /*
-    @SerializedName("production_companies")
-    @Expose
-    private List<ProductionCompany> productionCompanies = null;
-    @SerializedName("production_countries")
-    @Expose
-    private List<ProductionCountry> productionCountries = null;
-    */
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
@@ -63,11 +52,6 @@ public class MovieDetails {
     @SerializedName("runtime")
     @Expose
     private Integer runtime;
-    /*
-    @SerializedName("spoken_languages")
-    @Expose
-    private List<SpokenLanguage> spokenLanguages = null;
-    */
     @SerializedName("status")
     @Expose
     private String status;
@@ -101,14 +85,6 @@ public class MovieDetails {
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
-    }
-
-    public BelongsToCollection getBelongsToCollection() {
-        return belongsToCollection;
-    }
-
-    public void setBelongsToCollection(BelongsToCollection belongsToCollection) {
-        this.belongsToCollection = belongsToCollection;
     }
 
     public Integer getBudget() {
